@@ -1,7 +1,5 @@
 package uk.ac.ebi.ddi.task.pepatlasxmlgenerator.services;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.LineIterator;
 import org.springframework.stereotype.Service;
 import uk.ac.ebi.ddi.task.pepatlasxmlgenerator.utils.FileDownloadUtils;
 import uk.ac.ebi.ddi.task.pepatlasxmlgenerator.utils.TsvUtils;

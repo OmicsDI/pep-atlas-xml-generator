@@ -18,32 +18,32 @@ import java.util.concurrent.atomic.AtomicInteger;
 @SpringBootApplication
 public class PepAtlasXmlGeneratorApplication implements CommandLineRunner {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(PepAtlasXmlGeneratorApplication.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PepAtlasXmlGeneratorApplication.class);
 
-	@Autowired
-	private PeptideAtlasService peptideAtlasService;
+    @Autowired
+    private PeptideAtlasService peptideAtlasService;
 
-	@Autowired
-	private PepAtlasXmlGeneratorTaskProperties taskProperties;
+    @Autowired
+    private PepAtlasXmlGeneratorTaskProperties taskProperties;
 
-	@Autowired
-	private IFileSystem fileSystem;
+    @Autowired
+    private IFileSystem fileSystem;
 
-	public static void main(String[] args) {
-		SpringApplication.run(PepAtlasXmlGeneratorApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(PepAtlasXmlGeneratorApplication.class, args);
+    }
 
-	@Override
-	public void run(String... args) throws Exception {
-		List<String> datasetFiles = peptideAtlasService.getDatasetFiles();
-		AtomicInteger atomicInteger = new AtomicInteger(0);
-		for (String file : datasetFiles) {
-			File datasetFile = File.createTempFile("ddi", "tmp.xml");
-			FileDownloadUtils.downloadFile(file, datasetFile);
-			String filePath = taskProperties.getOutputDir() + "/"
-					+ taskProperties.getPrefix() + atomicInteger.getAndIncrement() + ".xml";
-			LOGGER.info("Attempting to write data to {}", filePath);
-			fileSystem.copyFile(datasetFile, filePath);
-		}
-	}
+    @Override
+    public void run(String... args) throws Exception {
+        List<String> datasetFiles = peptideAtlasService.getDatasetFiles();
+        AtomicInteger atomicInteger = new AtomicInteger(0);
+        for (String file : datasetFiles) {
+            File datasetFile = File.createTempFile("ddi", "tmp.xml");
+            FileDownloadUtils.downloadFile(file, datasetFile);
+            String filePath = taskProperties.getOutputDir() + "/"
+                    + taskProperties.getPrefix() + atomicInteger.getAndIncrement() + ".xml";
+            LOGGER.info("Attempting to write data to {}", filePath);
+            fileSystem.copyFile(datasetFile, filePath);
+        }
+    }
 }
